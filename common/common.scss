@@ -22,11 +22,11 @@
   > .wrap {
     .contents {
       display: grid;
-      grid-template-areas: 'toggle-logo lspace extra-info rspace panel';
+      grid-template-areas: "toggle-logo lspace extra-info rspace panel";
       grid-template-columns:
         auto
         1fr
-        minmax(0, 974px)
+        minmax(0, 1086px)
         1fr
         auto;
       gap: 0;
