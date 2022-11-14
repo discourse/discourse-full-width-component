@@ -1,8 +1,29 @@
 .wrap {
-  max-width: unset;
+  max-width: unset; // undoing core default
 }
 
 #main-outlet-wrapper {
+  grid-template-columns: 1fr auto 1fr;
+  gap: 2em;
+  padding: 0;
+
+  body.has-sidebar-page & {
+    grid-template-columns: 1fr auto 1fr; // overriding core
+    .sidebar-wrapper {
+      width: var(--d-sidebar-width);
+    }
+  }
+
+  .sidebar-container {
+    background: var(
+      --primary-very-low
+    ); // need to move background color for new behavior
+  }
+
+  .sidebar-wrapper {
+    background: transparent; // remove old bg color location
+  }
+
   #main-outlet {
     margin: 0 auto;
     max-width: var(--d-max-width);
@@ -13,6 +34,13 @@
 #main-outlet > .regular {
   max-width: var(--d-max-width);
   margin: 0 auto;
+  display: flex; // forces the container to occupy available width
+  flex-wrap: wrap;
+
+  .suggested-topics-wrapper,
+  .container.posts {
+    width: 100%; // full width elements, to avoid wrap
+  }
   body.has-sidebar-page & {
     margin: 0 auto;
   }
@@ -22,11 +50,12 @@
   > .wrap {
     .contents {
       display: grid;
-      grid-template-areas: "toggle-logo lspace extra-info rspace panel";
+      grid-template-areas: "toggle logo lspace extra-info rspace panel";
       grid-template-columns:
         auto
+        auto
         1fr
-        minmax(0, 974px)
+        minmax(0, 1110px)
         1fr
         auto;
       gap: 0;
@@ -34,6 +63,7 @@
   }
   .title {
     min-width: 0;
+    margin-right: 1em;
   }
   .panel {
     grid-area: panel;
@@ -46,17 +76,13 @@
   width: 100%;
   box-sizing: border-box;
   padding: 0;
-  margin: 0 auto;
+  margin: 0 auto 0 2.5em;
 }
 
 .header-contents__logo-and-toggle {
   display: flex;
   align-items: center;
   margin-right: 1em;
-
-  .has-sidebar-page & {
-    width: var(--d-sidebar-width);
-  }
 }
 
 body.has-sidebar-page {
