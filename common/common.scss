@@ -3,17 +3,13 @@
 }
 
 #main-outlet-wrapper {
-  // below 1666px wide the main content shifts anyway, so might as well keep it centered
-  @media screen and (min-width: 1666px) {
-    grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr;
-  }
+  grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr;
+
   gap: 2em;
   padding: 0;
 
   body.has-sidebar-page & {
-    @media screen and (min-width: 1666px) {
-      grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr; // overriding core
-    }
+    grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr; // overriding core
     .sidebar-wrapper {
       width: var(--d-sidebar-width);
     }
@@ -56,11 +52,31 @@
         minmax(0, var(--d-max-width))
         1fr
         auto;
+      .has-sidebar-page & {
+        grid-template-columns:
+          auto
+          173px
+          0
+          1fr
+          auto;
+        @media screen and (min-width: 1645px) {
+          grid-template-columns:
+            auto
+            173px
+            1fr
+            minmax(0, var(--d-max-width))
+            1fr
+            auto;
+        }
+      }
       gap: 0;
     }
   }
+  .header-sidebar-toggle {
+    grid-area: toggle;
+  }
   .title {
-    min-width: 0;
+    grid-area: logo;
     margin-right: 1em;
   }
   .panel {
@@ -73,8 +89,17 @@
   max-width: var(--d-max-width);
   width: 100%;
   box-sizing: border-box;
-  padding: 0;
-  margin: 0 auto 0 2.5em;
+  padding: 0 0 0 1em;
+  margin: 0 auto;
+  .has-sidebar-page & {
+    padding: 0 0 0 0.9em;
+    margin-left: 1.2em;
+    width: calc(100% - 1.2em);
+
+    @media screen and (min-width: 1645px) {
+      margin-left: -4em;
+    }
+  }
 }
 
 body.has-sidebar-page {
