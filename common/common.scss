@@ -10,6 +10,7 @@
 
   body.has-sidebar-page & {
     grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr; // overriding core
+
     .sidebar-wrapper {
       width: var(--d-sidebar-width);
     }
@@ -21,6 +22,7 @@
   }
 
   .sidebar-wrapper {
+    width: 100%; // safari has issues without this
     background: transparent; // remove old bg color location
   }
 
@@ -41,42 +43,34 @@
 }
 
 .d-header {
+  .header-contents__toggle-and-logo {
+    display: flex;
+  }
   > .wrap {
     .contents {
       display: grid;
-      grid-template-areas: "toggle logo lspace extra-info rspace panel";
+      grid-template-areas: "toggle lspace extra-info rspace panel";
       grid-template-columns:
         auto
-        auto
         1fr
-        minmax(0, var(--d-max-width))
+        minmax(0, calc(var(--d-max-width) - 1em))
         1fr
         auto;
+      gap: 0;
+
       .has-sidebar-page & {
         grid-template-columns:
-          auto
-          173px
-          0
+          calc(var(--d-sidebar-width) - 11px) // 11px is wrap padding
+          1fr
+          minmax(0, calc(var(--d-max-width) + 7.25em))
           1fr
           auto;
-        @media screen and (min-width: 1645px) {
-          grid-template-columns:
-            auto
-            173px
-            1fr
-            minmax(0, var(--d-max-width))
-            1fr
-            auto;
-        }
+        gap: 1em;
       }
-      gap: 0;
     }
   }
-  .header-sidebar-toggle {
-    grid-area: toggle;
-  }
   .title {
-    grid-area: logo;
+    min-width: 0;
     margin-right: 1em;
   }
   .panel {
@@ -89,17 +83,6 @@
   max-width: var(--d-max-width);
   width: 100%;
   box-sizing: border-box;
-  padding: 0 0 0 1em;
-  margin: 0 auto;
-  .has-sidebar-page & {
-    padding: 0 0 0 0.9em;
-    margin-left: 1.2em;
-    width: calc(100% - 1.2em);
-
-    @media screen and (min-width: 1645px) {
-      margin-left: -3.85em;
-    }
-  }
 }
 
 body.has-sidebar-page {
