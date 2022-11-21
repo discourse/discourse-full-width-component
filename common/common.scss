@@ -17,8 +17,9 @@
   }
 
   .sidebar-container {
-    border-right: 1px solid var(--primary-low);
-    background: transparent; // need to move background color for new behavior
+    background: var(
+      --primary-very-low
+    ); // need to move background color for new behavior
   }
 
   .sidebar-wrapper {
@@ -98,30 +99,5 @@ body.sidebar-animate {
   }
   .d-header-wrap .wrap {
     transition: none;
-  }
-}
-
-// some more opinionated style
-
-.sidebar-wrapper {
-  --d-sidebar-highlight-color: var(--highlight-medium);
-}
-
-.sidebar-section-link-wrapper .sidebar-section-link {
-  color: var(--primary-700);
-  &:hover,
-  &:focus {
-    background: var(--highlight-medium);
-  }
-  &.active {
-    background: var(--tertiary-low);
-    color: var(--primary-700);
-  }
-}
-
-.sidebar-section-header-button {
-  &:hover,
-  &:focus {
-    background: var(--tertiary) !important;
   }
 }
