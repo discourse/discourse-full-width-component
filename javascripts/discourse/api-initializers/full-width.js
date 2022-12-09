@@ -7,10 +7,8 @@ export default apiInitializer("0.8", (api) => {
     template: hbs`
       <div class="header-contents__toggle-and-logo">
         {{#if this.site.desktopView}}
-          {{#if this.siteSettings.enable_experimental_sidebar_hamburger}}
-            {{#if attrs.sidebarEnabled}}
-              {{sidebar-toggle attrs=attrs}}
-            {{/if}}
+          {{#if attrs.sidebarEnabled}}
+            {{sidebar-toggle attrs=attrs}}
           {{/if}}
         {{/if}}
         {{home-logo attrs=attrs}}
