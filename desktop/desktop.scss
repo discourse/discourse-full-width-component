@@ -109,7 +109,7 @@ body:not(.has-sidebar-page) {
           grid-template-columns:
             auto
             1fr
-            minmax(0, calc(var(--d-max-width) + -0.8em))
+            minmax(0, calc(var(--d-max-width) + -0.9em))
             // -.8em varies a little for logo vs home icon... consider making those the same size
             1fr
             auto;
