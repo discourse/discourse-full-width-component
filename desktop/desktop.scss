@@ -2,6 +2,14 @@
   max-width: unset; // undoing core default
 }
 
+.d-header #site-logo {
+  // constraining the logo to fit its grid container
+  // this prevents the logo from shifting header content
+  // when the sidebar is opened
+  max-height: 100%;
+  max-width: 100%;
+}
+
 #main-outlet-wrapper {
   grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr;
 
@@ -47,15 +55,16 @@
   .header-contents__toggle-and-logo {
     display: flex;
     align-items: center;
+    min-width: 0;
   }
   > .wrap {
     .contents {
       display: grid;
       grid-template-areas: "toggle lspace extra-info rspace panel";
       grid-template-columns:
-        auto
+        calc(var(--d-sidebar-width) - 11px) // 11px is wrap padding
         1fr
-        minmax(0, calc(var(--d-max-width) - 1em))
+        minmax(0, calc(var(--d-max-width) + 7.25em))
         1fr
         auto;
       gap: 0;
@@ -74,9 +83,40 @@
   .title {
     min-width: 0;
     margin-right: 0.725em;
+    a {
+      min-width: 0;
+    }
   }
   .panel {
     grid-area: panel;
+  }
+}
+
+body:not(.has-sidebar-page) {
+  .d-header {
+    > .wrap {
+      .contents {
+        &.header-title-docked {
+          @media screen and (max-width: 1360px) {
+            grid-template-columns:
+              auto
+              1fr
+              minmax(0, calc(var(--d-max-width) + 7.25em))
+              1fr
+              auto;
+          }
+
+          grid-template-columns:
+            auto
+            1fr
+            minmax(0, calc(var(--d-max-width) + -0.8em))
+            // -.8em varies a little for logo vs home icon... consider making those the same size
+            1fr
+            auto;
+          gap: 0;
+        }
+      }
+    }
   }
 }
 
@@ -85,6 +125,7 @@
   max-width: var(--d-max-width);
   width: 100%;
   box-sizing: border-box;
+  padding-right: 0;
 }
 
 body.has-sidebar-page {
