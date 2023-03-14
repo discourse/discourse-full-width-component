@@ -147,3 +147,26 @@ body.sidebar-animate {
 .d-header-icons {
   display: flex;
 }
+
+// chat specific styles
+
+.has-full-page-chat {
+  #main-outlet-wrapper {
+    #main-outlet {
+      max-width: unset;
+      grid-column-start: 1;
+      grid-column-end: -1; // fill the right column
+    }
+  }
+
+  &.has-sidebar-page #main-outlet-wrapper {
+    #main-outlet {
+      grid-column-start: content;
+    }
+    grid-template-columns: var(--d-sidebar-width) minmax(0, 1fr); // width adjustment
+  }
+  &:not(.discourse-sidebar) .full-page-chat {
+    border-left: none;
+    border-right: none;
+  }
+}
