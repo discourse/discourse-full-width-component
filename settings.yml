@@ -1,0 +1,5 @@
+full_width_chat:
+  default: true
+
+avoid_composer_overlap:
+  default: true
