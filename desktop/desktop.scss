@@ -148,81 +148,191 @@ body.sidebar-animate {
   display: flex;
 }
 
-// chat specific styles
+@if $full_width_chat == "true" {
+  // chat specific styles
 
-.has-full-page-chat {
-  #main-outlet-wrapper {
-    #main-outlet {
-      max-width: unset;
-      grid-column-start: 1;
-      grid-column-end: -1; // fill the right column
-    }
-  }
-
-  &.has-sidebar-page #main-outlet-wrapper {
-    #main-outlet {
-      grid-column-start: content;
-    }
-    grid-template-columns: var(--d-sidebar-width) minmax(0, 1fr); // width adjustment
-  }
-  &:not(.discourse-sidebar) .full-page-chat {
-    border-left: none;
-    border-right: none;
-  }
-}
-
-@media screen and (min-width: 1300px) {
-  .chat-drawer-active {
-    #main-outlet-wrapper #main-outlet {
-      max-width: unset;
-    }
-    .discourse-root {
-      display: grid;
-      grid-template-areas: "header header" "content chat" "footer footer";
-      grid-template-columns: 1fr auto;
-    }
-    .d-header-wrap {
-      grid-area: header;
-    }
+  .has-full-page-chat {
     #main-outlet-wrapper {
-      grid-area: content;
-    }
-    .chat-drawer-outlet {
-      grid-area: chat;
-      position: sticky;
-      top: var(--header-offset);
-      height: calc(100vh - var(--header-offset));
-    }
-    .chat-drawer-container {
-      border-radius: 0;
-    }
-    .chat-drawer-outlet-container {
-      position: relative;
-      max-height: unset;
-      height: 100%;
-    }
-    .chat-drawer-header {
-      border-radius: 0;
-    }
-    .chat-drawer.is-expanded {
-      height: 100% !important; // overrides inline style
-    }
-    .chat-drawer-header__expand-btn {
-      display: none;
+      #main-outlet {
+        max-width: unset;
+        grid-column-start: 1;
+        grid-column-end: -1; // fill the right column
+      }
     }
 
     &.has-sidebar-page #main-outlet-wrapper {
-      grid-template-columns: auto 1fr;
+      #main-outlet {
+        grid-column-start: content;
+      }
+      grid-template-columns: var(--d-sidebar-width) minmax(
+          0,
+          1fr
+        ); // width adjustment
     }
-
-    &.has-sidebar-page .d-header > .wrap .contents {
-      grid-template-columns:
-        calc(var(--d-sidebar-width) - 11px) 1fr minmax(0, var(--d-max-width))
-        1fr 24.5em;
+    &:not(.discourse-sidebar) .full-page-chat {
+      border-left: none;
+      border-right: none;
     }
+  }
 
-    &:not(.has-sidebar-page) .d-header > .wrap .contents.header-title-docked {
-      grid-template-columns: auto auto 1fr auto;
+  @media screen and (min-width: 1500px) {
+    // could maybe be a little less, but this is easier to make compatible with the composer
+    .chat-drawer-active {
+      #main-outlet-wrapper #main-outlet {
+        max-width: unset;
+      }
+      .discourse-root {
+        display: grid;
+        grid-template-areas: "header header" "content chat" "footer footer";
+        grid-template-columns: 1fr auto;
+      }
+      .d-header-wrap {
+        grid-area: header;
+      }
+      #main-outlet-wrapper {
+        grid-area: content;
+      }
+      .chat-drawer-outlet {
+        grid-area: chat;
+        position: sticky;
+        top: var(--header-offset);
+        height: calc(100vh - var(--header-offset));
+      }
+      .chat-drawer-container {
+        border-radius: 0;
+      }
+      .chat-drawer-outlet-container {
+        position: relative;
+        max-height: unset;
+        height: 100%;
+      }
+      .chat-drawer-header {
+        border-radius: 0;
+      }
+      .chat-drawer.is-expanded {
+        height: 100% !important; // overrides inline style
+      }
+      .chat-drawer-header__expand-btn {
+        display: none;
+      }
+
+      &.has-sidebar-page #main-outlet-wrapper {
+        grid-template-columns: auto 1fr;
+      }
+
+      &.has-sidebar-page .d-header > .wrap .contents {
+        grid-template-columns:
+          calc(var(--d-sidebar-width) - 11px) 1fr minmax(0, var(--d-max-width))
+          1fr 24.5em;
+      }
+
+      &:not(.has-sidebar-page) .d-header > .wrap .contents.header-title-docked {
+        grid-template-columns: auto auto 1fr auto;
+      }
+    }
+  }
+}
+
+// can the composer avoid the sidebar?
+// yes, but it's a bit tricky without lots of structural changes
+
+@mixin flatHeader {
+  .d-header {
+    box-shadow: none;
+    border-bottom: 1px solid var(--primary-low);
+  }
+}
+
+@mixin flatComposer {
+  #reply-control {
+    box-shadow: none;
+  }
+}
+
+@mixin drawerWidth {
+  .chat-drawer {
+    max-width: 370px;
+    margin-left: 2em;
+    .chat-drawer-container {
+      border-top: none;
+    }
+  }
+}
+
+@mixin drawerHeight {
+  .chat-drawer-outlet-container {
+    padding-bottom: 0;
+  }
+}
+
+@mixin sidebarHeight {
+  .sidebar-wrapper .sidebar-container {
+    height: 100%;
+  }
+}
+
+@if ($avoid_composer_overlap == "true") {
+  :root {
+    --full-width-drawer-width: 385px;
+    --full-width-composer-max-width: 1478px;
+  }
+
+  // sidebar only
+  @media screen and (min-width: 1300px) {
+    .has-sidebar-page:not(.chat-drawer-active) {
+      @include sidebarHeight();
+      @media screen and (max-width: 1950px) {
+        @include flatHeader();
+        @include flatComposer();
+        #reply-control {
+          width: calc(100vw - var(--d-sidebar-width));
+          max-width: var(--full-width-composer-max-width);
+          margin-left: var(--d-sidebar-width);
+          margin-right: auto;
+        }
+      }
+    }
+  }
+
+  // chat drawer only
+  @media screen and (min-width: 1500px) {
+    // could maybe be a little less, but this is easier to make compatible with the composer
+    .chat-drawer-active:not(.has-sidebar-page) {
+      @include drawerWidth();
+      @include drawerHeight();
+
+      @media screen and (max-width: 2200px) {
+        @include flatHeader();
+        @include flatComposer();
+        #reply-control {
+          width: calc(100vw - 400px);
+          max-width: var(--full-width-composer-max-width);
+          margin-left: auto;
+          margin-right: calc(var(--full-width-drawer-width) - 10px);
+        }
+      }
+    }
+  }
+
+  // sidebar and chat drawer
+  @media screen and (min-width: 1500px) {
+    .has-sidebar-page.chat-drawer-active {
+      @include sidebarHeight();
+      @include drawerWidth();
+      @include drawerHeight();
+
+      @media screen and (max-width: 2220px) {
+        @include flatHeader();
+        @include flatComposer();
+        #reply-control {
+          width: calc(
+            100vw - var(--d-sidebar-width) - var(--full-width-drawer-width)
+          );
+          max-width: unset;
+          margin-left: var(--d-sidebar-width);
+          margin-right: var(--full-width-drawer-width);
+        }
+      }
     }
   }
 }
