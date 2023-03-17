@@ -3,6 +3,7 @@ avoid a problem with scrolling the main content -->
 
 <script type="text/discourse-plugin" version="0.8">
     const { cancel, schedule } = require("@ember/runloop");
+    const { discourseLater } = require("discourse-common/lib/later");
 
     api.modifyClass('component:chat-live-pane', {
       pluginId: "full-width-component",
