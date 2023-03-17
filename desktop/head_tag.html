@@ -1,0 +1,52 @@
+/* This is a temporary override that modifies line 46 to use "block:nearest"to
+avoid a problem with scrolling the main content */
+
+<script type="text/discourse-plugin" version="0.8">
+    const { cancel, schedule } = require("@ember/runloop");
+
+    api.modifyClass('component:chat-live-pane', {
+      pluginId: "full-width-component",
+
+      scrollToMessage(
+      messageId,
+      opts = { highlight: false, position: "start", autoExpand: false }
+    ) {
+      if (this._selfDeleted) {
+        return;
+      }
+
+      const message = this.args.channel.findMessage(messageId);
+      if (message?.deletedAt && opts.autoExpand) {
+        message.expanded = true;
+      }
+
+      schedule("afterRender", () => {
+        const messageEl = this._scrollerEl.querySelector(
+          `.chat-message-container[data-id='${messageId}']`
+        );
+
+        if (!messageEl || this._selfDeleted) {
+          return;
+        }
+
+        if (opts.highlight) {
+          message.highlighted = true;
+
+          discourseLater(() => {
+            if (this._selfDeleted) {
+              return;
+            }
+
+            message.highlighted = false;
+          }, 2000);
+        }
+
+        this.forceRendering(() => {
+          messageEl.scrollIntoView({
+            block: "nearest",
+          });
+        });
+      });
+    }
+  })
+</script>
