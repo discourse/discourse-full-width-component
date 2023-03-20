@@ -245,16 +245,20 @@ body.sidebar-animate {
 
 @mixin flatComposer {
   #reply-control {
+    border-left: 1px solid var(--primary-low);
+    border-right: 1px solid var(--primary-low);
     box-shadow: none;
+    min-width: 653px;
   }
 }
 
 @mixin drawerWidth {
   .chat-drawer {
-    max-width: 370px;
+    max-width: 638px;
     margin-left: 2em;
     .chat-drawer-container {
       border-top: none;
+      box-shadow: none;
     }
   }
 }
@@ -273,8 +277,13 @@ body.sidebar-animate {
 
 @if ($avoid_composer_overlap == "true") {
   :root {
-    --full-width-drawer-width: 385px;
-    --full-width-composer-max-width: 1478px;
+    --full-width-drawer-width: var(
+      --custom-drawer-width-composer-margin,
+      385px
+    );
+    --full-width-composer-max-width: calc(
+      100vw - var(--d-sidebar-width) - 15px
+    );
   }
 
   // sidebar only
@@ -289,6 +298,7 @@ body.sidebar-animate {
           max-width: var(--full-width-composer-max-width);
           margin-left: var(--d-sidebar-width);
           margin-right: auto;
+          transition: width 0.25s;
         }
       }
     }
@@ -300,15 +310,13 @@ body.sidebar-animate {
     .chat-drawer-active:not(.has-sidebar-page) {
       @include drawerWidth();
       @include drawerHeight();
-
       @media screen and (max-width: 2200px) {
         @include flatHeader();
         @include flatComposer();
         #reply-control {
-          width: calc(100vw - 400px);
-          max-width: var(--full-width-composer-max-width);
-          margin-left: auto;
-          margin-right: calc(var(--full-width-drawer-width) - 10px);
+          width: 100vw;
+          max-width: calc(100vw - var(--full-width-drawer-width));
+          margin-left: 0;
         }
       }
     }

@@ -1,6 +1,3 @@
-<!--  This is a temporary override that modifies lines 33-43 to use "block:nearest"to
-avoid a problem with scrolling the main content -->
-
 <script type="text/discourse-plugin" version="0.8">
     const { cancel, schedule } = require("@ember/runloop");
     const { discourseLater } = require("discourse-common/lib/later");
@@ -30,6 +27,9 @@ avoid a problem with scrolling the main content -->
           return;
         }
 
+        // edited the below to avoid some chat bugs
+        // block: "nearest" avoids an issue where the body scrolls when chat does
+
         if (opts.highlight) {
           message.highlighted = true;
           if (this._selfDeleted) {
@@ -44,5 +44,35 @@ avoid a problem with scrolling the main content -->
         });
       });
     }
+  })
+
+  // below I get the width of the chat drawer and set it as a css variable
+  // so I can then set the right composer margin
+  // this is a little magic-numbery for now
+
+  const { action } = require("@ember/object");
+  const { observes } = require("discourse-common/utils/decorators");
+
+  api.modifyClass('component:chat-drawer', {
+    pluginId: "full-width-component",
+
+    @observes("chatStateManager.isDrawerActive")
+    _fireHiddenAppEvents() {
+      const chatDrawerSizeWidth = parseInt(localStorage.getItem('discourse_chat_drawer_size_width')) + 14 || 398 + 16;
+      if (chatDrawerSizeWidth) {
+        document.documentElement.style.setProperty('--custom-drawer-width-composer-margin', `${chatDrawerSizeWidth}px`);
+      }
+      this.appEvents.trigger("chat:rerender-header");
+    },
+
+    @action
+    didResize(element, { width, height }) {
+      console.log("resized")
+      this.chatDrawerSize.size = { width, height };
+      const composerMarginWidth = width + 14;
+      const clampedComposerMarginWidth = Math.min(Math.max(composerMarginWidth, 263), 652 );
+      document.documentElement.style.setProperty('--custom-drawer-width-composer-margin', `${clampedComposerMarginWidth}px`);
+    },
+
   })
 </script>
