@@ -13,7 +13,6 @@
 
 #main-outlet-wrapper {
   grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr;
-
   gap: 2em;
   padding: 0;
 
@@ -23,6 +22,11 @@
     .sidebar-wrapper {
       width: var(--d-sidebar-width);
     }
+  }
+
+  body.has-full-page-chat & {
+    grid-template-columns: min-content;
+    gap: 0;
   }
 
   .sidebar-container {
@@ -40,6 +44,10 @@
     margin: 0 auto;
     max-width: var(--d-max-width);
     width: 100%;
+
+    body.has-full-page-chat & {
+      max-width: unset;
+    }
   }
 }
 
