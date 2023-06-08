@@ -29,15 +29,8 @@
     gap: 0;
   }
 
-  .sidebar-container {
-    background: var(
-      --primary-very-low
-    ); // need to move background color for new behavior
-  }
-
   .sidebar-wrapper {
     width: 100%; // safari has issues without this
-    background: transparent; // remove old bg color location
   }
 
   #main-outlet {
@@ -49,6 +42,10 @@
       max-width: unset;
     }
   }
+}
+
+.has-full-page-chat:not(.discourse-sidebar) .full-page-chat {
+  border: none;
 }
 
 #main-outlet > .regular {
