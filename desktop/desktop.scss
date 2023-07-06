@@ -140,7 +140,7 @@ body.has-sidebar-page {
   }
 
   @media screen and (min-width: $reply-area-max-width) {
-    #reply-control {
+    #reply-control.show-preview {
       max-width: calc(100vw - (100vw - 100%) - var(--d-sidebar-width) - 2rem);
       margin-right: 1rem;
     }
