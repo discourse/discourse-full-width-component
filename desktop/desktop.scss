@@ -139,12 +139,21 @@ body.has-sidebar-page {
     max-width: unset;
   }
 
-  @media screen and (min-width: $reply-area-max-width) {
+  @media screen and (min-width: calc($reply-area-max-width + (17em * 2))) {
     #reply-control.show-preview {
-      max-width: calc(100vw - (100vw - 100%) - var(--d-sidebar-width) - 2rem);
-      margin-right: 1rem;
+      margin-left: auto;
+      margin-right: auto;
     }
+    .sidebar-container {
+      height: auto;
+    }
+  }
 
+  @media screen and (max-width: calc($reply-area-max-width + (17em * 2))) and (min-width: calc($reply-area-max-width + calc(17em / 2))) {
+    #reply-control {
+      margin-left: 17em;
+      width: auto;
+    }
     .sidebar-container {
       height: auto;
     }
