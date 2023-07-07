@@ -1,11 +1,3 @@
-:root {
-  --d-sidebar-composer-total-width: calc(
-    $reply-area-max-width + var(--d-sidebar-width)
-  );
-  --d-sidebar-composer-total-width-narrow: calc(
-    $reply-area-max-width + (var(--d-sidebar-width) * 2)
-  );
-}
 .wrap {
   max-width: unset; // undoing core default
 }
@@ -147,7 +139,7 @@ body.has-sidebar-page {
     max-width: unset;
   }
 
-  @media screen and (min-width: 1985px) {
+  @media screen and (min-width: calc($reply-area-max-width + (17em * 2))) {
     #reply-control.show-preview {
       margin-left: auto;
       margin-right: auto;
@@ -157,37 +149,13 @@ body.has-sidebar-page {
     }
   }
 
-  @media screen and (min-width: 1110px) {
-    .sidebar-container {
-      height: auto;
-    }
-  }
-
-  @media screen and (max-width: var(--d-sidebar-composer-total-width)) {
-    #reply-control.show-preview {
-      // width: calc(100vw - (100vw - 100%) - var(--d-sidebar-width) - 2rem);
+  @media screen and (max-width: calc($reply-area-max-width + (17em * 2))) and (min-width: calc($reply-area-max-width + calc(17em / 2))) {
+    #reply-control {
+      margin-left: 17em;
       width: auto;
-      max-width: $reply-area-max-width;
-      margin-right: 1rem;
-      margin-left: calc(
-        ((100vw - (100vw - 100%)) - var(--d-sidebar-width) - var(--d-max-width)) /
-          2
-      );
     }
     .sidebar-container {
       height: auto;
-    }
-  }
-
-  @media screen and (max-width: $reply-area-max-width) {
-    #reply-control.show-preview {
-      width: 100%;
-      max-width: 100%;
-      margin-left: 0;
-      margin-right: 0;
-    }
-    .sidebar-container {
-      height: var(--composer-height);
     }
   }
 }
