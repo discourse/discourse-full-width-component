@@ -1,3 +1,11 @@
+:root {
+  --d-sidebar-composer-total-width: calc(
+    $reply-area-max-width + var(--d-sidebar-width)
+  );
+  --d-sidebar-composer-total-width-narrow: calc(
+    $reply-area-max-width + (var(--d-sidebar-width) * 2)
+  );
+}
 .wrap {
   max-width: unset; // undoing core default
 }
@@ -139,14 +147,47 @@ body.has-sidebar-page {
     max-width: unset;
   }
 
-  @media screen and (min-width: $reply-area-max-width) {
+  @media screen and (min-width: 1985px) {
     #reply-control.show-preview {
-      max-width: calc(100vw - (100vw - 100%) - var(--d-sidebar-width) - 2rem);
-      margin-right: 1rem;
+      margin-left: auto;
+      margin-right: auto;
     }
-
     .sidebar-container {
       height: auto;
+    }
+  }
+
+  @media screen and (min-width: 1110px) {
+    .sidebar-container {
+      height: auto;
+    }
+  }
+
+  @media screen and (max-width: var(--d-sidebar-composer-total-width)) {
+    #reply-control.show-preview {
+      // width: calc(100vw - (100vw - 100%) - var(--d-sidebar-width) - 2rem);
+      width: auto;
+      max-width: $reply-area-max-width;
+      margin-right: 1rem;
+      margin-left: calc(
+        ((100vw - (100vw - 100%)) - var(--d-sidebar-width) - var(--d-max-width)) /
+          2
+      );
+    }
+    .sidebar-container {
+      height: auto;
+    }
+  }
+
+  @media screen and (max-width: $reply-area-max-width) {
+    #reply-control.show-preview {
+      width: 100%;
+      max-width: 100%;
+      margin-left: 0;
+      margin-right: 0;
+    }
+    .sidebar-container {
+      height: var(--composer-height);
     }
   }
 }
