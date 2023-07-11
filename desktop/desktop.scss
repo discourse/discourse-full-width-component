@@ -77,7 +77,7 @@
 
       .has-sidebar-page & {
         // at wide widths, when 1fr > 0
-        // we want the panel to be the same width as the logo
+        // we want the panel to be the same width as the sidebar
         // this way we can get more accurate centering
         grid-template-columns:
           calc(var(--d-sidebar-width) - 11px) // 11px is wrap padding
@@ -87,7 +87,7 @@
           minmax(0, calc(var(--d-sidebar-width) - 11px));
 
         // at narrower widths, when 1fr = 0
-        // we can center without mataching the logo's width
+        // we can center without mataching the sidebar's width
         // which allows the title to take up the remaining width
         @media screen and (max-width: 1400px) {
           grid-template-columns:
