@@ -18,7 +18,6 @@
 
   body.has-sidebar-page & {
     grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr; // overriding core
-
     .sidebar-wrapper {
       width: var(--d-sidebar-width);
     }
@@ -58,35 +57,55 @@
 }
 
 .d-header {
-  .header-contents__toggle-and-logo {
-    display: flex;
-    align-items: center;
-    min-width: 0;
-  }
   > .wrap {
     .contents {
       display: grid;
-      grid-template-areas: "toggle lspace extra-info rspace panel";
+      grid-template-areas: "logo lspace extra-info rspace panel";
       grid-template-columns:
-        calc(var(--d-sidebar-width) - 11px) // 11px is wrap padding
+        auto
         1fr
-        minmax(0, calc(var(--d-max-width) + 7.25em))
+        minmax(0, calc(var(--d-max-width) - 2em))
         1fr
         auto;
-      gap: 0;
+      .d-header-mode {
+        grid-area: lspace;
+        white-space: nowrap;
+        @include breakpoint("tablet") {
+          display: none;
+        }
+      }
 
       .has-sidebar-page & {
         grid-template-columns:
           calc(var(--d-sidebar-width) - 11px) // 11px is wrap padding
           1fr
-          minmax(0, calc(var(--d-max-width) + 7.25em))
+          minmax(0, calc(var(--d-max-width) + 7.15em))
           1fr
           auto;
         gap: 1em;
+        @media screen and (max-width: 1000px) {
+          gap: 0.5em;
+        }
+        .d-header-mode {
+          grid-area: extra-info;
+        }
       }
     }
   }
+  .header-sidebar-toggle {
+    grid-area: logo;
+  }
+  .before-header-panel-outlet {
+    grid-area: extra-info;
+  }
+  .d-header-mode {
+    .bootstrap-mode {
+      margin: 0;
+    }
+  }
   .title {
+    grid-area: logo;
+    margin-left: 3.7em; // 2.7em hamburger width + 1em for margin
     min-width: 0;
     margin-right: 0.725em;
     a {
@@ -98,45 +117,22 @@
   }
 }
 
-body:not(.has-sidebar-page) {
-  .d-header {
-    > .wrap {
-      .contents {
-        &.header-title-docked {
-          @media screen and (max-width: 1360px) {
-            grid-template-columns:
-              auto
-              1fr
-              minmax(0, calc(var(--d-max-width) + 7.25em))
-              1fr
-              auto;
-          }
-
-          grid-template-columns:
-            auto
-            1fr
-            minmax(0, calc(var(--d-max-width) + -0.9em))
-            // -.8em varies a little for logo vs home icon... consider making those the same size
-            1fr
-            auto;
-          gap: 0;
-        }
-      }
-    }
-  }
-}
-
 .extra-info-wrapper {
   grid-area: extra-info;
   max-width: var(--d-max-width);
   width: 100%;
   box-sizing: border-box;
-  padding-right: 0;
+  padding: 0;
 }
 
 body.has-sidebar-page {
   .wrap {
-    max-width: unset;
+    max-width: unset; // undoing core default
+  }
+
+  .d-header-mode,
+  .extra-info-wrapper {
+    padding: 0;
   }
 
   @media screen and (min-width: $reply-area-max-width) {

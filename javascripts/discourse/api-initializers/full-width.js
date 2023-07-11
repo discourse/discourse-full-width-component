@@ -1,35 +1,9 @@
 import { apiInitializer } from "discourse/lib/api";
-import hbs from "discourse/widgets/hbs-compiler";
 import Session from "discourse/models/session";
 import { h } from "virtual-dom";
 import { iconNode } from "discourse-common/lib/icon-library";
 
 export default apiInitializer("0.8", (api) => {
-  api.reopenWidget("header-contents", {
-    tagName: "div.contents",
-
-    buildClasses(attrs) {
-      return attrs.minimized ? "header-title-docked" : "";
-    },
-
-    template: hbs`
-   
-      <div class="header-contents__toggle-and-logo" data-docked-title={{attrs.minimized}}>
-        {{#if this.site.desktopView}}
-          {{#if attrs.sidebarEnabled}}
-            {{sidebar-toggle attrs=attrs}}
-          {{/if}}
-        {{/if}}
-        {{home-logo attrs=attrs}}
-      </div>
-      {{#if attrs.topic}}
-        {{header-topic-info attrs=attrs}}
-      {{/if}}
-      
-      <div class="panel clearfix" role="navigation">{{yield}}</div>
-    `,
-  });
-
   api.reopenWidget("home-logo", {
     logo() {
       const { siteSettings } = this,
