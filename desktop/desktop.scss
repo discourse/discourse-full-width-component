@@ -56,23 +56,34 @@
   }
 }
 
+.d-header .title:not(.title--minimized) {
+  // allowing overflow here isn't always ideal
+  // but works well enough most of the time
+  overflow: visible;
+}
+
 .d-header {
   > .wrap {
     .contents {
       display: grid;
       grid-template-areas: "logo lspace extra-info rspace panel";
       grid-template-columns:
+        minmax(auto, 1fr)
         auto
-        1fr
-        minmax(0, calc(var(--d-max-width) - 2em))
-        1fr
-        auto;
+        minmax(0, calc(var(--d-max-width)))
+        auto
+        minmax(auto, 1fr);
+
       .d-header-mode {
-        grid-area: lspace;
+        grid-area: extra-info;
         white-space: nowrap;
         @include breakpoint("tablet") {
           display: none;
         }
+      }
+
+      .d-header .title {
+        min-width: auto;
       }
 
       .has-sidebar-page & {
@@ -121,10 +132,9 @@
   .title {
     grid-area: logo;
     margin-left: 3.7em; // 2.7em hamburger width + 1em for margin
-    min-width: 0;
     margin-right: 0.725em;
     a {
-      min-width: 0;
+      flex: 1 0 auto;
     }
   }
   .panel {
