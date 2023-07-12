@@ -173,9 +173,6 @@ body.has-sidebar-page {
   }
 
   @media screen and (max-width: calc($reply-area-max-width + ($sidebar-width * 2))) and (min-width: calc($reply-area-max-width + calc($sidebar-width / 2))) {
-    .title-wrapper {
-      width: $sidebar-width;
-    }
     #reply-control {
       margin-left: $sidebar-width;
       width: auto;
