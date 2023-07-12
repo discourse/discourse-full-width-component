@@ -1,3 +1,5 @@
+$sidebar-width: #{$sidebar_width}em;
+
 .wrap {
   max-width: unset; // undoing core default
 }
@@ -135,7 +137,7 @@ body.has-sidebar-page {
     padding: 0;
   }
 
-  @media screen and (min-width: calc($reply-area-max-width + (17em * 2))) {
+  @media screen and (min-width: calc($reply-area-max-width + ($sidebar-width * 2))) {
     #reply-control.show-preview {
       margin-left: auto;
       margin-right: auto;
@@ -145,7 +147,7 @@ body.has-sidebar-page {
     }
   }
 
-  @media screen and (max-width: calc($reply-area-max-width + (17em * 2))) and (min-width: calc($reply-area-max-width + calc(17em / 2))) {
+  @media screen and (max-width: calc($reply-area-max-width + ($sidebar-width * 2))) and (min-width: calc($reply-area-max-width + calc($sidebar-width / 2))) {
     #reply-control {
       margin-left: 17em;
       width: auto;

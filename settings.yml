@@ -1,0 +1,4 @@
+sidebar_width:
+  type: integer
+  default: 17
+  description: Change this in case of custom sidebar width. Value in EM only.
