@@ -195,3 +195,10 @@ body.sidebar-animate {
 .d-header-icons {
   display: flex;
 }
+
+.rtl {
+  .d-header .title {
+    margin-right: 3.7em; // 2.7em hamburger width + 1em for margin
+    margin-left: 0.725em;
+  }
+}
