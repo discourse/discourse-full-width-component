@@ -76,11 +76,11 @@ body.full-width-enabled {
         display: grid;
         grid-template-areas: "logo lspace extra-info rspace panel";
         grid-template-columns:
-          minmax(auto, 1fr)
-          auto
-          minmax(0, calc(var(--d-max-width)))
-          auto
-          minmax(auto, 1fr);
+          calc(var(--d-sidebar-width) - 11px) 1fr minmax(
+            0,
+            calc(var(--d-max-width))
+          )
+          1fr minmax(0, calc(var(--d-sidebar-width) - 11px));
 
         .d-header-mode {
           grid-area: extra-info;
@@ -215,7 +215,7 @@ body.full-width-enabled {
   margin: 0;
   position: fixed;
   bottom: 0;
-  transform: translate(0,-1em);
+  transform: translate(0, -1em);
   right: 1em;
   display: inline;
   border: 1px solid var(--primary-low);
@@ -224,7 +224,7 @@ body.full-width-enabled {
   z-index: z("header");
   transition: transform 0.2s ease-in-out;
   &:hover {
-    transform: scale(1.05) translate(0,-1em);
+    transform: scale(1.05) translate(0, -1em);
     transition: border-color 0.2s ease-in-out, transform 0.2s ease-in-out;
     border-color: var(--primary-medium) !important;
     .d-icon {
@@ -240,12 +240,11 @@ body.full-width-enabled {
     }
   }
   body.has-full-page-chat.full-width-enabled & {
-    transform: translate(0,-5em);
+    transform: translate(0, -5em);
     transition: transform 0.2s ease-in-out;
   }
 
   body.chat-drawer-active.full-width-enabled & {
     display: none;
   }
-  
 }
