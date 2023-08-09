@@ -7,6 +7,45 @@ $sidebar-width: #{$sidebar_width}em;
   bottom: 1em;
   right: 1em;
   display: inline;
+  border: 1px solid var(--primary-low);
+  border-radius: var(--d-border-radius);
+  background-color: var(--secondary);
+  &:hover {
+    transition: border-color 0.2s ease-in-out;
+    border-color: var(--primary-medium);
+    background-color: var;
+  }
+}
+
+#main-outlet-wrapper {
+  grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr;
+  gap: 2em;
+  padding: 0;
+
+  body.has-sidebar-page.full-width-enabled & {
+    grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr; // overriding core
+    .sidebar-wrapper {
+      width: var(--d-sidebar-width);
+    }
+  }
+
+  body.has-full-page-chat.full-width-enabled & {
+    grid-template-columns: min-content;
+    gap: 0;
+  }
+
+  #main-outlet {
+    margin: 0 auto;
+    max-width: var(--d-max-width);
+    width: 100%;
+    body.has-full-page-chat.full-width-enabled & {
+      max-width: unset;
+    }
+  }
+}
+
+.has-full-page-chat:not(.discourse-sidebar) .full-page-chat {
+  border: none;
 }
 
 body.full-width-enabled {
@@ -28,35 +67,9 @@ body.full-width-enabled {
     gap: 2em;
     padding: 0;
 
-    body.has-sidebar-page & {
-      grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr; // overriding core
-      .sidebar-wrapper {
-        width: var(--d-sidebar-width);
-      }
-    }
-
-    body.has-full-page-chat & {
-      grid-template-columns: min-content;
-      gap: 0;
-    }
-
     .sidebar-wrapper {
       width: 100%; // safari has issues without this
     }
-
-    #main-outlet {
-      margin: 0 auto;
-      max-width: var(--d-max-width);
-      width: 100%;
-
-      body.has-full-page-chat & {
-        max-width: unset;
-      }
-    }
-  }
-
-  .has-full-page-chat:not(.discourse-sidebar) .full-page-chat {
-    border: none;
   }
 
   #main-outlet > .regular {

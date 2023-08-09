@@ -1,8 +1,9 @@
 {{#if this.shouldRender}}
   <DButton
     {{did-insert this.toggleClasses}}
-    {{did-update this.toggleClasses}}
+    {{will-destroy this.removeClasses}}
     @action={{action "toggleFullWidth"}}
-    class="btn-default btn full-width-toggle"
-  >[ ]</DButton>
+    class="btn-flat btn full-width-toggle"
+    @icon={{if this.fullWidthEnabled "compress" "expand"}}
+  />
 {{/if}}
