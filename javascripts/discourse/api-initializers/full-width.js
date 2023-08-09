@@ -4,16 +4,13 @@ import { h } from "virtual-dom";
 import { iconNode } from "discourse-common/lib/icon-library";
 
 export default apiInitializer("0.8", (api) => {
-
   const keyValueStore = api.container.lookup("service:key-value-store");
-  const fullWidthEnabled = keyValueStore.getItem("fullWidthEnabled") === "true";
-
-  if (!fullWidthEnabled) {
-   return;
-  }
 
   api.reopenWidget("home-logo", {
     logo() {
+      if (keyValueStore.getItem("fullWidthEnabled") !== "true") {
+        return this._super();
+      }
       const { siteSettings } = this,
         mobileView = this.site.mobileView;
 

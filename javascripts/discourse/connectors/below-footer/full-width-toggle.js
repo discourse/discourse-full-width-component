@@ -12,7 +12,9 @@ export default class FullWidthToggle extends Component {
   @tracked fullWidthEnabled = this.keyValueStore.getItem("fullWidthEnabled") === "true";
 
   get shouldRender() {
-    if (this.site.desktopView) {
+    let desktopView = this.site.get("desktopView");
+    let narrowDesktopView = this.site.get("narrowDesktopView");
+    if (desktopView && !narrowDesktopView) {
       return true;
     }
   }
@@ -38,6 +40,5 @@ export default class FullWidthToggle extends Component {
     this.fullWidthEnabled = !currentValue;
     this.toggleClasses();
     this.appEvents.trigger("site-header:force-refresh");
-    console.log('sent appEvents.trigger("site-header:force-refresh")');
   }
 }
