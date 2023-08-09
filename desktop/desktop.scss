@@ -243,4 +243,9 @@ body.full-width-enabled {
     transform: translate(0,-5em);
     transition: transform 0.2s ease-in-out;
   }
+
+  body.chat-drawer-active.full-width-enabled & {
+    display: none;
+  }
+  
 }
