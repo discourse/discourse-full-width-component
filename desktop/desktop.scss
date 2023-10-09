@@ -176,9 +176,20 @@ body.has-sidebar-page {
     #reply-control.show-preview:not(.fullscreen) {
       margin-left: $sidebar-width;
       width: auto;
+      //overruling new core composer changes
+      max-width: $reply-area-max-width;
+      transform: none;
     }
     .sidebar-container {
       height: auto;
+    }
+  }
+
+  //overruling new core composer changes
+  @media screen and (min-width: $reply-area-max-width) {
+    #reply-control.show-preview:not(.fullscreen) {
+      max-width: $reply-area-max-width;
+      transform: none;
     }
   }
 }
