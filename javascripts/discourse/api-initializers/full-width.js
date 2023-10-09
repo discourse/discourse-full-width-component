@@ -4,6 +4,8 @@ import { h } from "virtual-dom";
 import { iconNode } from "discourse-common/lib/icon-library";
 
 export default apiInitializer("0.8", (api) => {
+  document.body.classList.add("full-width-enabled");
+
   api.reopenWidget("home-logo", {
     logo() {
       const { siteSettings } = this,
