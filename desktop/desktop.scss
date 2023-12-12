@@ -74,7 +74,7 @@ $sidebar-width: #{$sidebar_width}em;
         auto
         minmax(0, calc(var(--d-max-width)))
         auto
-        auto;
+        minmax(auto, 1fr);
 
       .d-header-mode {
         grid-area: extra-info;
