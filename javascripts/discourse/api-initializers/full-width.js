@@ -1,6 +1,6 @@
+import { h } from "virtual-dom";
 import { apiInitializer } from "discourse/lib/api";
 import Session from "discourse/models/session";
-import { h } from "virtual-dom";
 import { iconNode } from "discourse-common/lib/icon-library";
 
 export default apiInitializer("0.8", (api) => {
