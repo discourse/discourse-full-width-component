@@ -135,7 +135,9 @@ $sidebar-width: #{$sidebar_width}em;
     grid-area: logo;
     margin-left: 3.7em; // 2.7em hamburger width + 1em for margin
     margin-right: 0.725em;
-    a {
+    display: flex;
+    overflow: visible;
+    .title {
       flex: 1 0 auto;
     }
   }
