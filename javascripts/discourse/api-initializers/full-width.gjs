@@ -6,8 +6,22 @@ export default apiInitializer("0.8", (api) => {
   document.body.classList.add("full-width-enabled");
 
   // When the sidebar is visible, force the HomeLogo to be in an 'un-minimized' state.
-  // Importing and using the HomeLogo component here isn't ideal... it's not really public API.
-  // But, it is certainly better than monkey-patching inside the component.
+  const transformerExists = api.registerValueTransformer?.(
+    "home-logo-minimized",
+    ({ value, context }) => {
+      if (value && context.showSidebar) {
+        return false;
+      }
+      return value;
+    }
+  );
+
+  if (transformerExists) {
+    return;
+  }
+
+  // Remove this fallback once the `home-logo-minimized` transformer is in
+  // stable
   api.renderInOutlet(
     "home-logo",
     class FullWidthHomeLogo extends Component {
