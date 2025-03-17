@@ -20,6 +20,7 @@ $sidebar-width: #{$sidebar_width}em;
 
   body.has-sidebar-page & {
     grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr; // overriding core
+
     .sidebar-wrapper {
       width: var(--d-sidebar-width);
     }
@@ -79,6 +80,7 @@ $sidebar-width: #{$sidebar_width}em;
       .d-header-mode {
         grid-area: extra-info;
         white-space: nowrap;
+
         @include breakpoint("tablet") {
           display: none;
         }
@@ -98,9 +100,10 @@ $sidebar-width: #{$sidebar_width}em;
           minmax(0, calc(var(--d-max-width)))
           1fr
           minmax(0, calc(var(--d-sidebar-width) - 11px));
+        gap: 1em;
 
         // at narrower widths, when 1fr = 0
-        // we can center without mataching the sidebar's width
+        // we can center without matching the sidebar's width
         // which allows the title to take up the remaining width
         @media screen and (max-width: 1400px) {
           grid-template-columns:
@@ -110,37 +113,44 @@ $sidebar-width: #{$sidebar_width}em;
             1fr
             auto;
         }
-        gap: 1em;
+
         @media screen and (max-width: 1000px) {
           gap: 0.5em;
         }
+
         .d-header-mode {
           grid-area: extra-info;
         }
       }
     }
   }
+
   .header-sidebar-toggle {
     grid-area: logo;
   }
+
   .before-header-panel-outlet {
     grid-area: extra-info;
   }
+
   .d-header-mode {
     .bootstrap-mode {
       margin: 0;
     }
   }
+
   .home-logo-wrapper-outlet {
     grid-area: logo;
     margin-left: 3.7em; // 2.7em hamburger width + 1em for margin
     margin-right: 0.725em;
     display: flex;
     overflow: visible;
+
     .title {
       flex: 1 0 auto;
     }
   }
+
   .panel {
     grid-area: panel;
   }
@@ -169,6 +179,7 @@ body.has-sidebar-page {
       margin-left: auto;
       margin-right: auto;
     }
+
     .sidebar-container {
       height: auto;
     }
@@ -178,16 +189,18 @@ body.has-sidebar-page {
     #reply-control.show-preview:not(.fullscreen) {
       margin-left: $sidebar-width;
       width: auto;
-      //overruling new core composer changes
+
+      // overruling new core composer changes
       max-width: $reply-area-max-width;
       transform: none;
     }
+
     .sidebar-container {
       height: auto;
     }
   }
 
-  //overruling new core composer changes
+  // overruling new core composer changes
   @media screen and (min-width: $reply-area-max-width) {
     #reply-control.show-preview:not(.fullscreen) {
       max-width: $reply-area-max-width;
@@ -200,6 +213,7 @@ body.sidebar-animate {
   #main-outlet-wrapper {
     transition: none;
   }
+
   .d-header-wrap .wrap {
     transition: none;
   }
