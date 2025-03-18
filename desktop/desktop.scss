@@ -164,6 +164,16 @@ $sidebar-width: #{$sidebar_width}em;
   padding: 0;
 }
 
+.header-search--enabled .floating-search-input-wrapper {
+  grid-area: extra-info;
+  @include breakpoint(tablet) {
+    grid-area: rspace
+  }
+  @include breakpoint(mobile-extra-large) {
+    display: none;
+  }
+}
+
 body.has-sidebar-page {
   .wrap {
     max-width: unset; // undoing core default
