@@ -241,3 +241,12 @@ body.sidebar-animate {
     margin-left: 0.725em;
   }
 }
+
+// provides some extra space for login buttons
+@media screen and (min-width: 1400px) {
+  .anon {
+    .d-header .panel {
+      grid-column-start: -4;
+    }
+  }
+}
