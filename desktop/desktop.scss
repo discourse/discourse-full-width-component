@@ -11,6 +11,25 @@ $sidebar-width: #{$sidebar_width}em;
   max-height: 100%;
   max-width: 100%;
   object-fit: contain; // contains logo without squishing/stretching
+
+  body:not(.has-sidebar-page) & {
+    max-width: unset;
+
+    @include breakpoint("mobile-extra-large") {
+      max-width: 25vw;
+    }
+  }
+}
+
+.d-header #site-text-logo {
+  font-size: clamp(var(--font-0), 2.5vw, var(--font-up-2));
+
+  .has-sidebar-page & {
+    white-space: wrap;
+    line-height: var(--line-height-small);
+
+    @include line-clamp(2);
+  }
 }
 
 #main-outlet-wrapper {
@@ -147,7 +166,7 @@ $sidebar-width: #{$sidebar_width}em;
     overflow: visible;
 
     .title {
-      flex: 1 0 auto;
+      flex: 1 1 auto;
     }
   }
 
