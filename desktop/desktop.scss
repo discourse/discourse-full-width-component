@@ -38,15 +38,16 @@ $sidebar-width: #{$sidebar_width}em;
   --spacer-width: minmax(var(--d-main-content-gap), 1fr);
   --main-outlet-width: minmax(0, var(--d-max-width));
   display: grid;
-  grid-template-areas: "spacer-left content spacer-right";
-  grid-template-columns: var(--spacer-width) var(--main-outlet-width) var(
+  grid-template-areas:
+    "sidebar spacer-left content spacer-right"
+    "sidebar spacer-left below-content spacer-right";
+  grid-template-columns: 0 var(--spacer-width) var(--main-outlet-width) var(
       --spacer-width
     );
   gap: 0;
   padding: 0;
 
   body.has-sidebar-page & {
-    grid-template-areas: "sidebar spacer-left content spacer-right";
     grid-template-columns:
       var(--d-sidebar-width) var(--spacer-width) var(--main-outlet-width)
       var(--spacer-width);
