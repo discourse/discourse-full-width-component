@@ -35,12 +35,22 @@ $sidebar-width: #{$sidebar_width}em;
 }
 
 #main-outlet-wrapper {
-  grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr;
-  gap: 2em;
+  --spacer-width: minmax(var(--d-main-content-gap), 1fr);
+  --main-outlet-width: minmax(0, var(--d-max-width));
+  display: grid;
+  grid-template-areas: "spacer-left main spacer-right";
+  grid-template-columns: var(--spacer-width) var(--main-outlet-width) var(
+      --spacer-width
+    );
+  gap: 0;
   padding: 0;
 
   body.has-sidebar-page & {
-    grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr; // overriding core
+    grid-template-areas: "sidebar spacer-left main spacer-right";
+    grid-template-columns:
+      var(--d-sidebar-width) var(--spacer-width) var(--main-outlet-width)
+      var(--spacer-width);
+    gap: 0;
 
     .sidebar-wrapper {
       width: var(--d-sidebar-width);
@@ -49,14 +59,15 @@ $sidebar-width: #{$sidebar_width}em;
 
   body.has-full-page-chat & {
     grid-template-columns: min-content;
-    gap: 0;
   }
 
   .sidebar-wrapper {
+    grid-area: sidebar;
     width: 100%; // safari has issues without this
   }
 
   #main-outlet {
+    grid-area: main;
     margin: 0 auto;
     max-width: var(--d-max-width);
     width: 100%;
