@@ -38,7 +38,7 @@ $sidebar-width: #{$sidebar_width}em;
   --spacer-width: minmax(var(--d-main-content-gap), 1fr);
   --main-outlet-width: minmax(0, var(--d-max-width));
   display: grid;
-  grid-template-areas: "spacer-left main spacer-right";
+  grid-template-areas: "spacer-left content spacer-right";
   grid-template-columns: var(--spacer-width) var(--main-outlet-width) var(
       --spacer-width
     );
@@ -46,7 +46,7 @@ $sidebar-width: #{$sidebar_width}em;
   padding: 0;
 
   body.has-sidebar-page & {
-    grid-template-areas: "sidebar spacer-left main spacer-right";
+    grid-template-areas: "sidebar spacer-left content spacer-right";
     grid-template-columns:
       var(--d-sidebar-width) var(--spacer-width) var(--main-outlet-width)
       var(--spacer-width);
@@ -67,7 +67,7 @@ $sidebar-width: #{$sidebar_width}em;
   }
 
   #main-outlet {
-    grid-area: main;
+    grid-area: content;
     margin: 0 auto;
     max-width: var(--d-max-width);
     width: 100%;
