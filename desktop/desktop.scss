@@ -62,12 +62,10 @@ $sidebar-width: #{$sidebar_width}em;
   }
 
   .sidebar-wrapper {
-    grid-area: sidebar;
     width: 100%; // safari has issues without this
   }
 
   #main-outlet {
-    grid-area: content;
     margin: 0 auto;
     max-width: var(--d-max-width);
     width: 100%;
