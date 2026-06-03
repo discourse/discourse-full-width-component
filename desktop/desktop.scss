@@ -58,6 +58,12 @@ $sidebar-width: #{$sidebar_width}em;
     }
   }
 
+  body.discourse-kanban-board.has-sidebar-page & {
+    grid-template-areas:
+      "sidebar content"
+      "sidebar below-content";
+  }
+
   body.has-full-page-chat & {
     --spacer-width: 0;
     --d-max-width: 100%;
