@@ -1,0 +1,252 @@
+@use "lib/viewport";
+
+$sidebar-width: #{$sidebar_width}em;
+
+@include viewport.from(md) {
+  #main-outlet-wrapper {
+    grid-template-columns: minmax(0, 1fr);
+    gap: 2em;
+    padding: 0;
+
+    .sidebar-wrapper {
+      width: 100%; // safari has issues without this
+    }
+
+    #main-outlet {
+      margin: 0 auto;
+      max-width: var(--d-max-width);
+      width: 100%;
+
+      body.has-full-page-chat & {
+        max-width: unset;
+      }
+    }
+
+    body.has-sidebar-page & {
+      grid-template-columns: 1fr minmax(0, var(--d-max-width)) 1fr;
+
+      .sidebar-wrapper {
+        width: var(--d-sidebar-width);
+      }
+    }
+
+    body:not(.has-sidebar-page) & {
+      grid-template-columns: 0 minmax(0, 1fr) 0;
+    }
+
+    body.has-full-page-chat & {
+      grid-template-columns: min-content;
+      gap: 0;
+    }
+  }
+
+  .has-full-page-chat:not(.discourse-sidebar) .full-page-chat {
+    border: none;
+  }
+
+  #main-outlet > .regular {
+    max-width: var(--d-max-width);
+    margin: 0 auto;
+  }
+
+  .d-header {
+    #site-logo {
+      // constraining the logo to fit its grid container
+      // this prevents the logo from shifting header content
+      // when the sidebar is opened
+      max-height: 100%;
+      max-width: 100%;
+      object-fit: contain; // contains logo without squishing/stretching
+
+      body:not(.has-sidebar-page) & {
+        max-width: unset;
+      }
+    }
+
+    #site-text-logo {
+      font-size: clamp(var(--font-0), 2.5vw, var(--font-up-2));
+
+      .has-sidebar-page & {
+        white-space: wrap;
+        line-height: var(--line-height-small);
+
+        @include line-clamp(2);
+      }
+    }
+
+    .title:not(.title--minimized) {
+      // allowing overflow here isn't always ideal
+      // but works well enough most of the time
+      overflow: visible;
+    }
+
+    .auth-buttons {
+      min-width: 0;
+
+      button {
+        min-width: 0;
+
+        .d-button-label {
+          @include ellipsis;
+        }
+      }
+    }
+
+    > .wrap {
+      .contents {
+        display: grid;
+        grid-template-areas: "logo lspace extra-info rspace panel";
+        grid-template-columns:
+          minmax(auto, 1fr)
+          auto
+          minmax(0, calc(var(--d-max-width)))
+          auto
+          minmax(auto, 1fr);
+
+        .d-header-mode {
+          grid-area: extra-info;
+          white-space: nowrap;
+        }
+
+        .title {
+          min-width: auto;
+        }
+
+        .has-sidebar-page & {
+          // at wide widths, when 1fr > 0
+          // we want the panel to be the same width as the sidebar
+          // this way we can get more accurate centering
+          grid-template-columns:
+            calc(var(--d-sidebar-width) - 11px) // 11px is wrap padding
+            1fr
+            minmax(0, calc(var(--d-max-width)))
+            1fr
+            auto;
+          gap: 1em;
+
+          // at narrower widths, when 1fr = 0
+          // we can center without matching the sidebar's width
+          // which allows the title to take up the remaining width
+          @media (width <= 1400px) {
+            grid-template-columns:
+              calc(var(--d-sidebar-width) - 11px)
+              1fr
+              minmax(0, calc(var(--d-max-width)))
+              1fr
+              auto;
+          }
+
+          @media (width <= 1000px) {
+            gap: 0.5em;
+          }
+
+          .d-header-mode {
+            grid-area: extra-info;
+          }
+        }
+      }
+    }
+
+    .header-sidebar-toggle {
+      grid-area: logo;
+    }
+
+    .before-header-panel-outlet {
+      grid-area: extra-info;
+    }
+
+    .d-header-mode {
+      .bootstrap-mode {
+        margin: 0;
+      }
+    }
+
+    .home-logo-wrapper-outlet {
+      grid-area: logo;
+      margin-left: 3.7em; // 2.7em hamburger width + 1em for margin
+      margin-right: 0.725em;
+      display: flex;
+      overflow: visible;
+
+      .title {
+        flex: 1 1 auto;
+      }
+    }
+
+    .panel {
+      grid-area: panel;
+      justify-content: end;
+    }
+
+    .extra-info-wrapper {
+      grid-area: extra-info;
+      max-width: var(--d-max-width);
+      width: 100%;
+      box-sizing: border-box;
+      padding: 0;
+    }
+
+    // .header-search--enabled is a body class
+    .header-search--enabled & .floating-search-input-wrapper {
+      grid-area: extra-info;
+    }
+
+    .rtl & .title {
+      margin-right: 3.7em; // 2.7em hamburger width + 1em for margin
+      margin-left: 0.725em;
+    }
+
+    // truncate button text rather than cause the entire header to overflow
+    .header-buttons {
+      min-width: 0;
+    }
+  }
+
+  // composer positioning
+  body.has-sidebar-page {
+    .wrap {
+      max-width: unset; // undoing core default
+    }
+
+    @media (width >= calc($reply-area-max-width + ($sidebar-width * 2))) {
+      #reply-control.show-preview {
+        margin-left: auto;
+        margin-right: auto;
+      }
+
+      .sidebar-container {
+        height: auto;
+      }
+    }
+
+    @media (calc($reply-area-max-width + calc($sidebar-width / 2)) <= width < calc($reply-area-max-width + ($sidebar-width * 2))) {
+      #reply-control.show-preview:not(.fullscreen) {
+        margin-left: $sidebar-width;
+        width: auto;
+
+        // overruling new core composer changes
+        max-width: $reply-area-max-width;
+        transform: none;
+      }
+
+      .sidebar-container {
+        height: auto;
+      }
+    }
+
+    // overruling new core composer changes
+    @media (width >= $reply-area-max-width) {
+      #reply-control.show-preview:not(.fullscreen) {
+        max-width: $reply-area-max-width;
+        transform: none;
+      }
+    }
+  }
+
+  body.sidebar-animate {
+    #main-outlet-wrapper,
+    .d-header-wrap .wrap {
+      transition: none;
+    }
+  }
+}
