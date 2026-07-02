@@ -10,7 +10,7 @@ $sidebar-width: #{$sidebar_width}em;
 
   #main-outlet-wrapper {
     grid-template-columns: minmax(0, 1fr);
-    gap: 2em;
+    gap: var(--d-wrap-padding-x);
     padding: 0;
 
     .sidebar-wrapper {
