@@ -3,9 +3,14 @@
 $sidebar-width: #{$sidebar_width}em;
 
 @include viewport.from(md) {
+  .wrap,
+  body.has-sidebar-page .wrap {
+    max-width: unset; // undo core default
+  }
+
   #main-outlet-wrapper {
     grid-template-columns: minmax(0, 1fr);
-    gap: 2em;
+    gap: var(--d-wrap-padding-x);
     padding: 0;
 
     .sidebar-wrapper {
@@ -97,53 +102,15 @@ $sidebar-width: #{$sidebar_width}em;
         display: grid;
         grid-template-areas: "logo lspace extra-info rspace panel";
         grid-template-columns:
-          minmax(auto, 1fr)
-          auto
+          calc(var(--d-sidebar-width) - var(--d-header-padding-x))
+          1fr
           minmax(0, calc(var(--d-max-width)))
-          auto
-          minmax(auto, 1fr);
+          1fr
+          auto;
+      }
 
-        .d-header-mode {
-          grid-area: extra-info;
-          white-space: nowrap;
-        }
-
-        .title {
-          min-width: auto;
-        }
-
-        .has-sidebar-page & {
-          // at wide widths, when 1fr > 0
-          // we want the panel to be the same width as the sidebar
-          // this way we can get more accurate centering
-          grid-template-columns:
-            calc(var(--d-sidebar-width) - 11px) // 11px is wrap padding
-            1fr
-            minmax(0, calc(var(--d-max-width)))
-            1fr
-            auto;
-          gap: 1em;
-
-          // at narrower widths, when 1fr = 0
-          // we can center without matching the sidebar's width
-          // which allows the title to take up the remaining width
-          @media (width <= 1400px) {
-            grid-template-columns:
-              calc(var(--d-sidebar-width) - 11px)
-              1fr
-              minmax(0, calc(var(--d-max-width)))
-              1fr
-              auto;
-          }
-
-          @media (width <= 1000px) {
-            gap: 0.5em;
-          }
-
-          .d-header-mode {
-            grid-area: extra-info;
-          }
-        }
+      .title {
+        min-width: auto;
       }
     }
 
@@ -204,10 +171,6 @@ $sidebar-width: #{$sidebar_width}em;
 
   // composer positioning
   body.has-sidebar-page {
-    .wrap {
-      max-width: unset; // undoing core default
-    }
-
     @media (width >= calc($reply-area-max-width + ($sidebar-width * 2))) {
       #reply-control.show-preview {
         margin-left: auto;
