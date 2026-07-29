@@ -21,6 +21,23 @@ RSpec.describe "Full width component", system: true do
     expect(page).to have_selector("#site-logo.logo-big")
   end
 
+  it "should use the small logo when scrolling down a topic if use_default_logo_behavior is enabled" do
+    theme.update_setting(:use_default_logo_behavior, true)
+    theme.save!
+
+    visit topic.relative_url
+
+    expect(page).to have_selector("#site-logo.logo-big")
+    expect(page).not_to have_selector(".d-header h1.header-title")
+
+    page.execute_script <<~JS
+      document.querySelector("#post_10").scrollIntoView(true);
+    JS
+
+    expect(page).to have_selector(".d-header h1.header-title")
+    expect(page).to have_selector("#site-logo.logo-small")
+  end
+
   it "should use default behavior when scrolling down a topic with no sidebar" do
     visit topic.relative_url
 
