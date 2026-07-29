@@ -1,3 +1,6 @@
 en:
   theme_metadata:
     description: "Makes Discourse occupy the full browser width"
+    settings:
+      use_default_logo_behavior:
+        description: "When enabled, the logo follows Discourse's default behavior and switches to the small logo when scrolling within a topic, even when the sidebar is visible."

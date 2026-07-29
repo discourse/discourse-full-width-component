@@ -68,6 +68,13 @@ $sidebar-width: #{$sidebar_width}em;
       }
     }
 
+    @if $use_default_logo_behavior == "true" {
+      // the small logo isn't constrained by the logo grid track
+      .title--minimized #site-logo {
+        max-width: unset;
+      }
+    }
+
     #site-text-logo {
       font-size: clamp(var(--font-0), 2.5vw, var(--font-up-2));
 
@@ -107,6 +114,18 @@ $sidebar-width: #{$sidebar_width}em;
           minmax(0, calc(var(--d-max-width)))
           1fr
           auto;
+
+        @if $use_default_logo_behavior == "true" {
+          // the small logo doesn't need the space reserved for the full logo
+          &:has(.title--minimized) {
+            grid-template-columns:
+              auto
+              1fr
+              minmax(0, calc(var(--d-max-width)))
+              1fr
+              auto;
+          }
+        }
       }
 
       .title {

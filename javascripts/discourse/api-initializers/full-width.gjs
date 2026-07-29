@@ -5,6 +5,11 @@ import { apiInitializer } from "discourse/lib/api";
 export default apiInitializer((api) => {
   document.body.classList.add("full-width-enabled");
 
+  // Leave the logo alone when the site's default behavior is preferred.
+  if (settings.use_default_logo_behavior) {
+    return;
+  }
+
   // When the sidebar is visible, force the HomeLogo to be in an 'un-minimized' state.
   const transformerExists = api.registerValueTransformer?.(
     "home-logo-minimized",
